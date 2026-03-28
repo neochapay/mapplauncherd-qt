@@ -104,8 +104,10 @@ QGuiApplication *MDeclarativeCachePrivate::qApplication(int &argc, char **argv)
         // Now override appFilePath and appDirPath. These are cached individually, so we
         // need to reset both.
         QFileInfo appFileInfo(argv[0]);
+#if QT_VERSION < QT_VERSION_CHECK(6, 10, 0)
         QCoreApplicationPrivate::setApplicationFilePath(appFileInfo.canonicalFilePath());
         qap->cachedApplicationDirPath = appFileInfo.canonicalPath();
+#endif
 
         // Set object name and application name to the name of the binary.
         qApp->setObjectName(appFileInfo.fileName());
